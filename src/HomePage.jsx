@@ -41,16 +41,34 @@ const CSS = `
   margin-top: 0.4rem;
 }
 
-.hub-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  padding: 1.5rem 1rem;
+.hub-body {
   max-width: 480px;
   margin: 0 auto;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.hub-section-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #3d4168;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #1a1d2e;
+  margin-bottom: 0.75rem;
+}
+
+.hub-section-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .app-card {
+  width: 100%;
   background: #0f1120;
   border: 1px solid #1a1d2e;
   border-radius: 14px;
@@ -60,6 +78,8 @@ const CSS = `
   position: relative;
   overflow: hidden;
   text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
 .app-card:active {
@@ -97,6 +117,7 @@ const CSS = `
   font-size: 0.8rem;
   color: #5a5f80;
   line-height: 1.4;
+  flex: 1;
 }
 
 .app-card-footer {
@@ -127,17 +148,6 @@ const CSS = `
   line-height: 1;
 }
 
-.hub-section-label {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #3d4168;
-  padding: 0.5rem 0 0.5rem;
-  border-bottom: 1px solid #1a1d2e;
-  margin-bottom: 0.25rem;
-}
-
 .hub-empty {
   text-align: center;
   color: #3d4168;
@@ -151,11 +161,12 @@ function formatDate(iso) {
   return d.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" });
 }
 
-// Group apps by trimestre (preserving registry order within each group)
+// Sort by date descending, then group by trimestre (preserving that order within each group)
 function groupByTrimestre(appList) {
+  const sorted = [...appList].sort((a, b) => b.date.localeCompare(a.date));
   const groups = [];
   const seen = {};
-  for (const app of appList) {
+  for (const app of sorted) {
     const key = app.trimestre || "Sin clasificar";
     if (!seen[key]) {
       seen[key] = [];
@@ -180,30 +191,32 @@ export default function HomePage() {
           <p className="hub-subtitle">{apps.length} lección{apps.length !== 1 ? "es" : ""} disponible{apps.length !== 1 ? "s" : ""}</p>
         </header>
 
-        <div className="hub-grid">
+        <div className="hub-body">
           {apps.length === 0 && (
             <p className="hub-empty">No hay apps registradas todavía.</p>
           )}
           {groups.map(({ label, items }) => (
             <div key={label}>
               <p className="hub-section-label">{label}</p>
-              {items.map((app) => (
-                <button
-                  key={app.slug}
-                  className="app-card"
-                  style={{ "--card-accent": app.accent }}
-                  onClick={() => navigate(`/app/${app.slug}`)}
-                  aria-label={`Abrir ${app.title}`}
-                >
-                  <p className="app-card-badge">Lección</p>
-                  <h2 className="app-card-title">{app.title}</h2>
-                  <p className="app-card-desc">{app.description}</p>
-                  <div className="app-card-footer">
-                    <span className="app-card-date">{formatDate(app.date)}</span>
-                    <span className="app-card-arrow">›</span>
-                  </div>
-                </button>
-              ))}
+              <div className="hub-section-cards">
+                {items.map((app) => (
+                  <button
+                    key={app.slug}
+                    className="app-card"
+                    style={{ "--card-accent": app.accent }}
+                    onClick={() => navigate(`/app/${app.slug}`)}
+                    aria-label={`Abrir ${app.title}`}
+                  >
+                    <p className="app-card-badge">Lección</p>
+                    <h2 className="app-card-title">{app.title}</h2>
+                    <p className="app-card-desc">{app.description}</p>
+                    <div className="app-card-footer">
+                      <span className="app-card-date">{formatDate(app.date)}</span>
+                      <span className="app-card-arrow">›</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
             </div>
           ))}
         </div>
