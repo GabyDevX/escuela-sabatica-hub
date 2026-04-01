@@ -1,4 +1,4 @@
-import { Suspense, Component } from "react";
+import { Suspense, Component, useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useParams, useNavigate, Navigate } from "react-router-dom";
 import HomePage from "./HomePage.jsx";
 import { appMap } from "./registry.js";
@@ -92,6 +92,16 @@ function AppView() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const entry = appMap[slug];
+  const [overlayVisible, setOverlayVisible] = useState(true);
+  const [overlayFading, setOverlayFading] = useState(false);
+
+  useEffect(() => {
+    setOverlayVisible(true);
+    setOverlayFading(false);
+    const fadeTimer = setTimeout(() => setOverlayFading(true), 350);
+    const hideTimer = setTimeout(() => setOverlayVisible(false), 650);
+    return () => { clearTimeout(fadeTimer); clearTimeout(hideTimer); };
+  }, [slug]);
 
   if (!entry) return <Navigate to="/" replace />;
 
@@ -108,6 +118,19 @@ function AppView() {
           <AppComponent />
         </Suspense>
       </ErrorBoundary>
+      {overlayVisible && (
+        <div style={{
+          position: "fixed", inset: 0, zIndex: 9998,
+          background: entry.bg,
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem",
+          opacity: overlayFading ? 0 : 1,
+          transition: overlayFading ? "opacity 0.3s ease" : "none",
+          pointerEvents: overlayFading ? "none" : "all",
+        }}>
+          <div className="loading-spinner" style={{ "--spinner-color": entry.accent }} />
+          <span className="loading-label">Cargando</span>
+        </div>
+      )}
     </>
   );
 }

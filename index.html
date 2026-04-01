@@ -16,6 +16,10 @@
   </head>
   <body>
     <div id="root"></div>
+    <div id="splash" style="position:fixed;inset:0;background:#07080d;display:flex;align-items:center;justify-content:center;z-index:99999;transition:opacity 0.3s ease">
+      <div style="width:28px;height:28px;border-radius:50%;border:2.5px solid transparent;border-top-color:#5a5f80;border-right-color:#5a5f80;animation:_sp 0.7s linear infinite"></div>
+      <style>@keyframes _sp{to{transform:rotate(360deg)}}</style>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
