@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, Component } from "react";
 import { BrowserRouter, Routes, Route, useParams, useNavigate, Navigate } from "react-router-dom";
 import HomePage from "./HomePage.jsx";
 import { appMap } from "./registry.js";
@@ -55,6 +55,30 @@ const BACK_CSS = `
 }
 `;
 
+class ErrorBoundary extends Component {
+  constructor(props) { super(props); this.state = { error: null }; }
+  static getDerivedStateFromError(error) { return { error }; }
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="loading-screen" style={{ background: this.props.bg || "#07080d", color: "#9090a0", gap: "1.5rem", padding: "2rem", textAlign: "center" }}>
+          <span style={{ fontSize: "2rem" }}>⚠️</span>
+          <span style={{ fontFamily: "sans-serif", fontSize: "0.9rem", lineHeight: 1.5 }}>
+            Algo salió mal.<br />
+            <button
+              onClick={() => { this.setState({ error: null }); window.location.reload(); }}
+              style={{ marginTop: "1rem", padding: "0.5rem 1.25rem", borderRadius: "999px", border: "1px solid #3d4168", background: "transparent", color: "#9090a0", cursor: "pointer", fontSize: "0.85rem" }}
+            >
+              Reintentar
+            </button>
+          </span>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 function LoadingScreen({ bg, accent, color }) {
   return (
     <div className="loading-screen" style={{ background: bg, "--spinner-color": accent, color }}>
@@ -79,9 +103,11 @@ function AppView() {
       <button className="back-btn" onClick={() => navigate("/")} aria-label="Volver al inicio">
         ‹ Inicio
       </button>
-      <Suspense fallback={<LoadingScreen bg={entry.bg} accent={entry.accent} color="#9090a0" />}>
-        <AppComponent />
-      </Suspense>
+      <ErrorBoundary bg={entry.bg}>
+        <Suspense fallback={<LoadingScreen bg={entry.bg} accent={entry.accent} color="#9090a0" />}>
+          <AppComponent />
+        </Suspense>
+      </ErrorBoundary>
     </>
   );
 }
