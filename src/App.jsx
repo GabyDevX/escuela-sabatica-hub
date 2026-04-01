@@ -29,15 +29,40 @@ const BACK_CSS = `
 .back-btn:active { background: rgba(0,0,0,0.8); }
 .loading-screen {
   min-height: 100dvh;
-  background: #07080d;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #3d4168;
+  gap: 1rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--spinner-color);
+  border-right-color: var(--spinner-color);
+  animation: spin 0.7s linear infinite;
+  opacity: 0.7;
+}
+.loading-label {
   font-family: sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.35;
 }
 `;
+
+function LoadingScreen({ bg, accent, color }) {
+  return (
+    <div className="loading-screen" style={{ background: bg, "--spinner-color": accent, color }}>
+      <div className="loading-spinner" />
+      <span className="loading-label">Cargando</span>
+    </div>
+  );
+}
 
 function AppView() {
   const { slug } = useParams();
@@ -54,7 +79,7 @@ function AppView() {
       <button className="back-btn" onClick={() => navigate("/")} aria-label="Volver al inicio">
         ‹ Inicio
       </button>
-      <Suspense fallback={<div className="loading-screen">Cargando…</div>}>
+      <Suspense fallback={<LoadingScreen bg={entry.bg} accent={entry.accent} color="#9090a0" />}>
         <AppComponent />
       </Suspense>
     </>
