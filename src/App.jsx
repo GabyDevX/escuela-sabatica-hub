@@ -1,6 +1,7 @@
-import { Suspense, Component, useState, useEffect } from "react";
+import { Suspense, Component } from "react";
 import { BrowserRouter, Routes, Route, useParams, useNavigate, Navigate } from "react-router-dom";
 import HomePage from "./HomePage.jsx";
+import ReadyGate from "./ReadyGate.jsx";
 import { appMap } from "./registry.js";
 
 const BACK_CSS = `
@@ -27,6 +28,8 @@ const BACK_CSS = `
   letter-spacing: 0.02em;
 }
 .back-btn:active { background: rgba(0,0,0,0.8); }
+
+@keyframes spin { to { transform: rotate(360deg); } }
 .loading-screen {
   min-height: 100dvh;
   display: flex;
@@ -35,12 +38,11 @@ const BACK_CSS = `
   justify-content: center;
   gap: 1rem;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
 .loading-spinner {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  border: 2px solid transparent;
+  border: 2.5px solid transparent;
   border-top-color: var(--spinner-color);
   border-right-color: var(--spinner-color);
   animation: spin 0.7s linear infinite;
@@ -62,9 +64,10 @@ class ErrorBoundary extends Component {
     if (this.state.error) {
       return (
         <div className="loading-screen" style={{ background: this.props.bg || "#07080d", color: "#9090a0", gap: "1.5rem", padding: "2rem", textAlign: "center" }}>
-          <span style={{ fontSize: "2rem" }}>⚠️</span>
+          <span style={{ fontSize: "2rem" }}>!</span>
           <span style={{ fontFamily: "sans-serif", fontSize: "0.9rem", lineHeight: 1.5 }}>
-            Algo salió mal.<br />
+            Algo salió mal.
+            <br />
             <button
               onClick={() => { this.setState({ error: null }); window.location.reload(); }}
               style={{ marginTop: "1rem", padding: "0.5rem 1.25rem", borderRadius: "999px", border: "1px solid #3d4168", background: "transparent", color: "#9090a0", cursor: "pointer", fontSize: "0.85rem" }}
@@ -79,9 +82,9 @@ class ErrorBoundary extends Component {
   }
 }
 
-function LoadingScreen({ bg, accent, color }) {
+function LoadingScreen({ bg, accent }) {
   return (
-    <div className="loading-screen" style={{ background: bg, "--spinner-color": accent, color }}>
+    <div className="loading-screen" style={{ background: bg, "--spinner-color": accent, color: "#9090a0" }}>
       <div className="loading-spinner" />
       <span className="loading-label">Cargando</span>
     </div>
@@ -92,16 +95,6 @@ function AppView() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const entry = appMap[slug];
-  const [overlayVisible, setOverlayVisible] = useState(true);
-  const [overlayFading, setOverlayFading] = useState(false);
-
-  useEffect(() => {
-    setOverlayVisible(true);
-    setOverlayFading(false);
-    const fadeTimer = setTimeout(() => setOverlayFading(true), 350);
-    const hideTimer = setTimeout(() => setOverlayVisible(false), 650);
-    return () => { clearTimeout(fadeTimer); clearTimeout(hideTimer); };
-  }, [slug]);
 
   if (!entry) return <Navigate to="/" replace />;
 
@@ -114,23 +107,12 @@ function AppView() {
         ‹ Inicio
       </button>
       <ErrorBoundary bg={entry.bg}>
-        <Suspense fallback={<LoadingScreen bg={entry.bg} accent={entry.accent} color="#9090a0" />}>
-          <AppComponent />
+        <Suspense key={slug} fallback={<LoadingScreen bg={entry.bg} accent={entry.accent} />}>
+          <ReadyGate bg={entry.bg}>
+            <AppComponent />
+          </ReadyGate>
         </Suspense>
       </ErrorBoundary>
-      {overlayVisible && (
-        <div style={{
-          position: "fixed", inset: 0, zIndex: 9998,
-          background: entry.bg,
-          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem",
-          opacity: overlayFading ? 0 : 1,
-          transition: overlayFading ? "opacity 0.3s ease" : "none",
-          pointerEvents: overlayFading ? "none" : "all",
-        }}>
-          <div className="loading-spinner" style={{ "--spinner-color": entry.accent }} />
-          <span className="loading-label">Cargando</span>
-        </div>
-      )}
     </>
   );
 }
