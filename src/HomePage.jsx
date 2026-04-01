@@ -127,6 +127,17 @@ const CSS = `
   line-height: 1;
 }
 
+.hub-section-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #3d4168;
+  padding: 0.5rem 0 0.5rem;
+  border-bottom: 1px solid #1a1d2e;
+  margin-bottom: 0.25rem;
+}
+
 .hub-empty {
   text-align: center;
   color: #3d4168;
@@ -140,8 +151,24 @@ function formatDate(iso) {
   return d.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" });
 }
 
+// Group apps by trimestre (preserving registry order within each group)
+function groupByTrimestre(appList) {
+  const groups = [];
+  const seen = {};
+  for (const app of appList) {
+    const key = app.trimestre || "Sin clasificar";
+    if (!seen[key]) {
+      seen[key] = [];
+      groups.push({ label: key, items: seen[key] });
+    }
+    seen[key].push(app);
+  }
+  return groups;
+}
+
 export default function HomePage() {
   const navigate = useNavigate();
+  const groups = groupByTrimestre(apps);
 
   return (
     <>
@@ -157,22 +184,27 @@ export default function HomePage() {
           {apps.length === 0 && (
             <p className="hub-empty">No hay apps registradas todavía.</p>
           )}
-          {apps.map((app) => (
-            <button
-              key={app.slug}
-              className="app-card"
-              style={{ "--card-accent": app.accent }}
-              onClick={() => navigate(`/app/${app.slug}`)}
-              aria-label={`Abrir ${app.title}`}
-            >
-              <p className="app-card-badge">Lección</p>
-              <h2 className="app-card-title">{app.title}</h2>
-              <p className="app-card-desc">{app.description}</p>
-              <div className="app-card-footer">
-                <span className="app-card-date">{formatDate(app.date)}</span>
-                <span className="app-card-arrow">›</span>
-              </div>
-            </button>
+          {groups.map(({ label, items }) => (
+            <div key={label}>
+              <p className="hub-section-label">{label}</p>
+              {items.map((app) => (
+                <button
+                  key={app.slug}
+                  className="app-card"
+                  style={{ "--card-accent": app.accent }}
+                  onClick={() => navigate(`/app/${app.slug}`)}
+                  aria-label={`Abrir ${app.title}`}
+                >
+                  <p className="app-card-badge">Lección</p>
+                  <h2 className="app-card-title">{app.title}</h2>
+                  <p className="app-card-desc">{app.description}</p>
+                  <div className="app-card-footer">
+                    <span className="app-card-date">{formatDate(app.date)}</span>
+                    <span className="app-card-arrow">›</span>
+                  </div>
+                </button>
+              ))}
+            </div>
           ))}
         </div>
       </div>
