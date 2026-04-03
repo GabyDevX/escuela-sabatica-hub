@@ -35,7 +35,7 @@ body{font-family:'DM Sans',sans-serif}
 .app{max-width:440px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
 .scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
 .scroll-area::-webkit-scrollbar{width:3px}
-.scroll-area::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:2px}
+.scroll-area::-webkit-scrollbar-thumb{background:var(--acc);border-radius:2px}
 
 /* HERO */
 .hero{position:relative;padding:2.8rem 1.5rem 2.4rem;background:linear-gradient(175deg,#0c1a0f 0%,#0a1309 55%,#07100a 100%);overflow:hidden;text-align:center}

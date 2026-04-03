@@ -30,7 +30,7 @@ body { font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; 
 .scroll-area { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain; }
 .scroll-area::-webkit-scrollbar { width: 3px; }
 .scroll-area::-webkit-scrollbar-track { background: transparent; }
-.scroll-area::-webkit-scrollbar-thumb { background: var(--brd2); border-radius: 2px; }
+.scroll-area::-webkit-scrollbar-thumb { background: var(--acc); border-radius: 2px; }
 
 /* HERO */
 .hero {

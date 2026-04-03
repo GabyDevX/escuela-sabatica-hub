@@ -159,7 +159,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
 .scroll-area::-webkit-scrollbar{width:3px}
 .scroll-area::-webkit-scrollbar-track{background:transparent}
-.scroll-area::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:2px}
+.scroll-area::-webkit-scrollbar-thumb{background:var(--acc);border-radius:2px}
 
 .hero{position:relative;padding:2.8rem 1.5rem 1rem;text-align:center;overflow:hidden;user-select:none;cursor:default}
 .hero-bg{position:absolute;inset:-80% -60%;background:radial-gradient(ellipse at 50% 30%,rgba(99,102,241,.12) 0%,transparent 60%);animation:pulse 10s ease-in-out infinite;pointer-events:none}
