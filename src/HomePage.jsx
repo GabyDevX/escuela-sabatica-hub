@@ -7,11 +7,30 @@ const CSS = `
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 .hub-root {
-  min-height: 100dvh;
+  height: 100dvh;
   background: #07080d;
   color: #e8eaf6;
   font-family: 'DM Sans', sans-serif;
-  padding: 0 0 3rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.hub-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 3rem;
+}
+
+.hub-scroll-area::-webkit-scrollbar {
+  width: 3px;
+}
+
+.hub-scroll-area::-webkit-scrollbar-thumb {
+  background: #1a1d2e;
+  border-radius: 2px;
 }
 
 .hub-header {
@@ -185,40 +204,42 @@ export default function HomePage() {
     <>
       <style>{CSS}</style>
       <div className="hub-root">
-        <header className="hub-header">
-          <p className="hub-logo">Escuela Sabática</p>
-          <h1 className="hub-title">Recursos Interactivos</h1>
-          <p className="hub-subtitle">{apps.length} lección{apps.length !== 1 ? "es" : ""} disponible{apps.length !== 1 ? "s" : ""}</p>
-        </header>
+        <div className="hub-scroll-area">
+          <header className="hub-header">
+            <p className="hub-logo">Escuela Sabática</p>
+            <h1 className="hub-title">Recursos Interactivos</h1>
+            <p className="hub-subtitle">{apps.length} lección{apps.length !== 1 ? "es" : ""} disponible{apps.length !== 1 ? "s" : ""}</p>
+          </header>
 
-        <div className="hub-body">
-          {apps.length === 0 && (
-            <p className="hub-empty">No hay apps registradas todavía.</p>
-          )}
-          {groups.map(({ label, items }) => (
-            <div key={label}>
-              <p className="hub-section-label">{label}</p>
-              <div className="hub-section-cards">
-                {items.map((app) => (
-                  <button
-                    key={app.slug}
-                    className="app-card"
-                    style={{ "--card-accent": app.accent }}
-                    onClick={() => navigate(`/app/${app.slug}`)}
-                    aria-label={`Abrir ${app.title}`}
-                  >
-                    <p className="app-card-badge">Lección</p>
-                    <h2 className="app-card-title">{app.title}</h2>
-                    <p className="app-card-desc">{app.description}</p>
-                    <div className="app-card-footer">
-                      <span className="app-card-date">{formatDate(app.date)}</span>
-                      <span className="app-card-arrow">›</span>
-                    </div>
-                  </button>
-                ))}
+          <div className="hub-body">
+            {apps.length === 0 && (
+              <p className="hub-empty">No hay apps registradas todavía.</p>
+            )}
+            {groups.map(({ label, items }) => (
+              <div key={label}>
+                <p className="hub-section-label">{label}</p>
+                <div className="hub-section-cards">
+                  {items.map((app) => (
+                    <button
+                      key={app.slug}
+                      className="app-card"
+                      style={{ "--card-accent": app.accent }}
+                      onClick={() => navigate(`/app/${app.slug}`)}
+                      aria-label={`Abrir ${app.title}`}
+                    >
+                      <p className="app-card-badge">Lección</p>
+                      <h2 className="app-card-title">{app.title}</h2>
+                      <p className="app-card-desc">{app.description}</p>
+                      <div className="app-card-footer">
+                        <span className="app-card-date">{formatDate(app.date)}</span>
+                        <span className="app-card-arrow">›</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </>
