@@ -119,14 +119,17 @@ const CSS = `
   font: inherit;
 }
 
-.app-card:hover { 
-  border-color: var(--card-accent); 
-  background: #13162b;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px -12px rgba(0,0,0,0.5);
+@media (hover: hover) {
+  .app-card:hover { 
+    border-color: var(--card-accent); 
+    background: #13162b;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+  .app-card:hover .app-card-arrow { transform: translateX(2px); background: var(--card-accent); color: var(--hub-bg); }
 }
 
-.app-card:active { transform: scale(0.985) translateY(0); }
+.app-card:active { transform: scale(0.985) translateY(0); background: #13162b; }
 
 .app-card::before {
   content: '';
@@ -189,8 +192,6 @@ const CSS = `
   line-height: 1;
   transition: transform .2s;
 }
-
-.app-card:hover .app-card-arrow { transform: translateX(2px); background: var(--card-accent); color: var(--hub-bg); }
 
 .app-card.latest {
   border-color: rgba(255,255,255,0.08);
