@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Segundo Trimestre ────────────────────────────────────────────────
   {
+    slug: "imagen-de-dios",
+    title: "Una imagen más clara de Dios",
+    description: "Semana 2 · 2do Trimestre 2026",
+    date: "2026-04-12",
+    trimestre: "2do Trimestre 2026",
+    accent: "#c9a84c",
+    bg: "#07080f",
+    component: lazy(() => import("./apps/imagen-de-dios/App.jsx")),
+  },
+  {
     slug: "chequeo-realidad",
     title: "Un Chequeo a tu Realidad Espiritual",
     description: "Semana 1 · 2do Trimestre 2026",
