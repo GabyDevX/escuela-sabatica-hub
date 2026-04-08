@@ -8,15 +8,15 @@
   "theme_color": "#07080d",
   "icons": [
     {
-      "src": "/Logo-InVerso.webp",
+      "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/webp",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/Logo-InVerso.webp",
+      "src": "/icon-192.png",
       "sizes": "192x192",
-      "type": "image/webp"
+      "type": "image/png"
     }
   ]
 }
