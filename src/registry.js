@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Segundo Trimestre ────────────────────────────────────────────────
   {
+    slug: "orgullo-humildad",
+    title: "Orgullo versus Humildad",
+    description: "Semana 3 · 2do Trimestre 2026",
+    date: "2026-04-19",
+    trimestre: "2do Trimestre 2026",
+    accent: "#7c6fcd",
+    bg: "#08080f",
+    component: lazy(() => import("./apps/orgullo-humildad/App.jsx")),
+  },
+  {
     slug: "imagen-de-dios",
     title: "Una imagen más clara de Dios",
     description: "Semana 2 · 2do Trimestre 2026",
