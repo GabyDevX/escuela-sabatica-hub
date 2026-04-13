@@ -140,6 +140,17 @@ body{font-family:'DM Sans',sans-serif}
 .ken-q{background:linear-gradient(135deg,rgba(124,111,205,.08),rgba(124,111,205,.02));border:1px solid rgba(124,111,205,.2);border-radius:14px;padding:1rem;margin-bottom:.7rem}
 .ken-q-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--acc2);margin-bottom:.5rem}
 .ken-q-text{font-size:1rem;line-height:1.6;color:var(--tx2)}
+
+/* CIERRE */
+.reflex-card{background:var(--surf);border:1px solid var(--brd);border-radius:14px;padding:1rem 1.05rem;margin-bottom:.75rem;display:flex;gap:.9rem;align-items:flex-start}
+.reflex-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--brd2);line-height:1;flex-shrink:0;width:2rem;padding-top:.1rem}
+.reflex-body{flex:1}
+.reflex-q{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:var(--tx);line-height:1.4}
+.reflex-ref{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--acc);margin-top:.35rem}
+.vida-card{background:linear-gradient(135deg,rgba(124,111,205,.10),rgba(124,111,205,.02));border:1.5px solid rgba(124,111,205,.25);border-radius:16px;padding:1.2rem 1.1rem;margin-top:.5rem}
+.vida-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--acc2);display:flex;align-items:center;gap:.4rem;margin-bottom:.75rem}
+.vida-text{font-size:1rem;line-height:1.72;color:var(--tx2)}
+.vida-text strong{color:var(--tx)}
 `;
 
 // ── DATOS ────────────────────────────────────────────────────────────────────
@@ -213,9 +224,18 @@ const GUIDE_STEPS = [
   { time:"00–05 min", title:"Apertura: El espejo del orgullo", desc:"Pedí que cada uno piense en una persona orgullosa. Luego preguntá: ¿pueden hacer el mismo ejercicio con ustedes mismos? ¿Qué ven?" },
   { time:"05–15 min", title:"La parábola: dos hombres, dos actitudes", desc:"Lee Lucas 18:9-14 en voz alta. Comparad al fariseo y al publicano: ¿Cómo se veían a sí mismos? ¿Cómo veían a los demás? ¿Cuál fue el veredicto de Jesús?" },
   { time:"15–20 min", title:"El problema de los discípulos", desc:"Lee Lucas 22:24-27. Después de años con Jesús, ¿seguían peleando por quién era el mayor? ¿Qué dice eso sobre cuán arraigado puede estar el orgullo?" },
-  { time:"20–25 min", title:"El ejemplo supremo: Filipenses 2:3-8", desc:"Leed juntos el himno de la kénosis. ¿Qué renunció Jesús? ¿Cuánto se humilló? ¿Qué nos enseña esto sobre cómo debemos relacionarnos?" },
+  { time:"20–25 min", title:"El ejemplo supremo: Kénosis", desc:"Leed juntos Filipenses 2:3-8. Usá el tab Kénosis para recorrer el descenso de Jesús paso a paso. ¿Qué renunció? ¿Cuánto se humilló? ¿Qué nos enseña?" },
   { time:"25–28 min", title:"Reflexión personal y oración", desc:"Preguntá: ¿En qué área de tu vida el orgullo te está impidiendo crecer o conectarte con Dios? Terminen en oración conjunta pidiendo un corazón humilde." },
-  { time:"28–30 min", title:"Cierre y desafío semanal", desc:"Desafío: Esta semana, identificá un momento diario donde puedas poner a alguien más en primer lugar. Compartan la experiencia la próxima clase." },
+  { time:"28–30 min", title:"Cierre y desafío semanal", desc:"Usá el tab Cierre para las preguntas finales. Desafío: esta semana, identificá un momento diario para poner a alguien más en primer lugar." },
+];
+
+const REFLEXIONES = [
+  { q:"Compará a los dos adoradores de Lucas 18:9-14. ¿Cómo se veían a sí mismos? ¿Cómo veían a los demás? ¿Y a Dios?", ref:"Lucas 18:9-14" },
+  { q:"¿Cuál es el principio central de Lucas 18:14? ¿En qué otro lugar de los Evangelios repite Jesús este mismo principio?", ref:"Lucas 18:14; Mateo 23:12; Lucas 14:11" },
+  { q:"Incluso después de más de tres años con Jesús, ¿de qué maneras seguían los discípulos teniendo problemas de orgullo? ¿Qué dice eso sobre nuestra propia lucha?", ref:"Lucas 22:24-27" },
+  { q:"¿De qué manera es Jesús el ejemplo supremo de humildad y abnegación? ¿Qué renunció en cada etapa de su descenso?", ref:"Filipenses 2:3-8" },
+  { q:"¿En qué medida creés que el orgullo y la ambición egoísta nos impiden recibir las bendiciones de Dios hoy?", ref:"Proverbios 29:23; Santiago 4:6-10" },
+  { q:"¿Qué oportunidades tenemos esta semana para poner a los demás en primer lugar de manera concreta?", ref:"Filipenses 2:3-4" },
 ];
 
 // ── APP ──────────────────────────────────────────────────────────────────────
@@ -292,7 +312,7 @@ export default function App() {
     { id:"interpreta", label:"Discípulos", Icon: Eye },
     { id:"biblia", label:"Biblia", Icon: BookOpen },
     { id:"quiz", label:"Quiz", Icon: Shield },
-    ...(teacherMode ? [{ id:"guia", label:"Guía", Icon: Star }] : []),
+    { id:"cierre", label:"Cierre", Icon: Star },
   ];
 
   return (
@@ -333,7 +353,7 @@ export default function App() {
                 selectQuiz={selectQuiz} nextQuiz={nextQuiz} retryQuiz={retryQuiz}
               />
             )}
-            {tab === "guia" && teacherMode && <TabGuia />}
+            {tab === "cierre" && <TabCierre />}
           </div>
         </div>
 
@@ -358,31 +378,44 @@ function TabInicio({ teacherMode }) {
       <div className="sec-title">Orgullo vs Humildad</div>
       <div className="sec-sub">El mundo recompensa el orgullo. El cielo recompensa la humildad.</div>
 
-      <div className="card">
-        <div className="card-label">Explorar esta semana</div>
-        <p>
-          <strong style={{ color:"var(--tx)" }}>Parábola</strong> — El fariseo y el publicano (Lucas 18:9-14)<br />
-          <strong style={{ color:"var(--tx)" }}>Kénosis</strong> — Filipenses 2:3-8 · El descenso de Jesús<br />
-          <strong style={{ color:"var(--tx)" }}>Discípulos</strong> — El orgullo hasta el final del ministerio de Jesús<br />
-          <strong style={{ color:"var(--tx)" }}>Biblia</strong> — Todos los versículos de la semana
-        </p>
-      </div>
+      {teacherMode ? (
+        <>
+          <div className="guide-banner">
+            <span className="guide-badge">Maestro</span>
+            <p>Guía de clase · 30 minutos · Modo maestro activo</p>
+          </div>
+          {GUIDE_STEPS.map((s, i) => (
+            <div key={i} className="guide-step">
+              <div className="guide-time">{s.time}</div>
+              <div className="guide-step-body">
+                <div className="guide-step-title">{s.title}</div>
+                <div className="guide-step-desc">{s.desc}</div>
+              </div>
+            </div>
+          ))}
+        </>
+      ) : (
+        <>
+          <div className="card">
+            <div className="card-label">Explorar esta semana</div>
+            <p>
+              <strong style={{ color:"var(--tx)" }}>Parábola</strong> — El fariseo y el publicano (Lucas 18:9-14)<br />
+              <strong style={{ color:"var(--tx)" }}>Kénosis</strong> — Filipenses 2:3-8 · El descenso de Jesús<br />
+              <strong style={{ color:"var(--tx)" }}>Discípulos</strong> — El orgullo hasta el final del ministerio de Jesús<br />
+              <strong style={{ color:"var(--tx)" }}>Biblia</strong> — Todos los versículos de la semana
+            </p>
+          </div>
 
-      <div className="egw-wrap">
-        <div className="egw-source"><BookOpen size={12} />Elena G. de White · Palabras de vida del gran Maestro, cap. 13, p. 127</div>
-        <div className="egw-text">«Mientras más nos acerquemos a Jesús, y más claramente apreciemos la pureza de su carácter, con mayor claridad discerniremos la excesiva pecaminosidad del pecado, y <strong>menos nos sentiremos inclinados a ensalzarnos a nosotros mismos</strong>.»</div>
-      </div>
+          <div className="egw-wrap">
+            <div className="egw-source"><BookOpen size={12} />Elena G. de White · Palabras de vida del gran Maestro, cap. 13, p. 127</div>
+            <div className="egw-text">«Mientras más nos acerquemos a Jesús, y más claramente apreciemos la pureza de su carácter, con mayor claridad discerniremos la excesiva pecaminosidad del pecado, y <strong>menos nos sentiremos inclinados a ensalzarnos a nosotros mismos</strong>.»</div>
+          </div>
 
-      <div className="card">
-        <div className="card-label">Pregunta introductoria</div>
-        <p>Al pensar en la palabra <strong style={{ color:"var(--acc3)" }}>"orgullo"</strong>, ¿en quién pensás primero? La verdadera pregunta es: ¿y yo? Al señalar con el dedo a otros sin querer ver el orgullo en nuestra propia vida, nos autoengañamos.</p>
-      </div>
-
-      {teacherMode && (
-        <div className="card" style={{ border:"1px solid rgba(224,192,112,.3)", background:"rgba(224,192,112,.04)" }}>
-          <div className="card-label" style={{ color:"var(--warn)" }}>💡 Nota para el maestro</div>
-          <p>Activá la pestaña <strong style={{ color:"var(--tx)" }}>Guía</strong> para ver el plan completo de 30 minutos con tiempos, preguntas y actividades.</p>
-        </div>
+          <div className="card">
+            <div className="card-label">Pregunta introductoria</div>
+            <p>Al pensar en la palabra <strong style={{ color:"var(--acc3)" }}>"orgullo"</strong>, ¿en quién pensás primero? La verdadera pregunta es: ¿y yo? Al señalar con el dedo a otros sin querer ver el orgullo en nuestra propia vida, nos autoengañamos.</p>
+          </div>
+        </>
       )}
     </>
   );
@@ -617,31 +650,29 @@ function TabQuiz({ quizIdx, quizSelected, quizAnswered, quizResults, quizDone, s
   );
 }
 
-// ── TAB: GUÍA MAESTRO ────────────────────────────────────────────────────────
-function TabGuia() {
+// ── TAB: CIERRE ──────────────────────────────────────────────────────────────
+function TabCierre() {
   return (
     <>
-      <div className="sec-title">Guía del Maestro</div>
-      <div className="sec-sub">Plan de clase · 30 minutos · Lucas 18</div>
-      <div className="guide-banner">
-        <span className="guide-badge">Modo Maestro</span>
-        <p>Este plan está diseñado para guiar la clase de Escuela Sabática con preguntas de reflexión activa y participación grupal.</p>
-      </div>
-      {GUIDE_STEPS.map((s, i) => (
-        <div key={i} className="guide-step">
-          <div className="guide-time">{s.time}</div>
-          <div className="guide-step-body">
-            <div className="guide-step-title">{s.title}</div>
-            <div className="guide-step-desc">{s.desc}</div>
+      <div className="sec-title">Cierre</div>
+      <div className="sec-sub">Preguntas para el grupo · Reflexión personal · Aplicación</div>
+
+      {REFLEXIONES.map((r, i) => (
+        <div className="reflex-card" key={i}>
+          <div className="reflex-num">{i + 1}</div>
+          <div className="reflex-body">
+            <div className="reflex-q">{r.q}</div>
+            <div className="reflex-ref">{r.ref}</div>
           </div>
         </div>
       ))}
-      <div className="egw-wrap" style={{ marginTop:"1rem" }}>
-        <div className="egw-source"><BookOpen size={12} />Puntos clave para recordar</div>
-        <div className="egw-text">
-          • El orgullo puede ser el mayor obstáculo en la relación con Dios.<br />
-          • La autosuficiencia nos hace dejar de buscar a Dios.<br />
-          • <strong>Jesús es el ejemplo supremo de humildad</strong> y el camino para superar el yo.
+
+      <div className="vida-card">
+        <div className="vida-label"><Heart size={13} />Para tu vida</div>
+        <div className="vida-text">
+          El orgullo es el pecado más silencioso — se disfraza de autoconfianza, de liderazgo, de estándares altos. Pero Dios <strong>resiste a los soberbios</strong> (1 P 5:5). No los ignora: los resiste activamente.<br /><br />
+          Esta semana, elegí un momento concreto donde podás poner a alguien más en primer lugar sin que nadie lo sepa. Sin publicarlo, sin recibir crédito. <strong>Solo porque Jesús se humilló para que vos puedas vivir</strong>.<br /><br />
+          La kénosis de Cristo no fue un evento único — fue la dirección permanente de su vida. Y es la invitación que nos hace a nosotros: <strong>vivir hacia abajo para que otros sean levantados</strong>.
         </div>
       </div>
     </>
