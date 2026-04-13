@@ -128,6 +128,18 @@ body{font-family:'DM Sans',sans-serif}
 .guide-step-body{flex:1}
 .guide-step-title{font-size:.97rem;font-weight:600;color:var(--tx);margin-bottom:.3rem}
 .guide-step-desc{font-size:.92rem;line-height:1.55;color:var(--tx2)}
+
+/* KÉNOSIS */
+.ken-descent{display:flex;flex-direction:column;gap:2px;margin-bottom:1.1rem}
+.ken-step{display:flex;gap:.8rem;align-items:flex-start;padding:.7rem .85rem;background:var(--surf);border-left:3px solid var(--brd2);border-radius:0 10px 10px 0;transition:border-color .2s}
+.ken-step:hover{border-left-color:var(--acc)}
+.ken-arrow{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--acc2);flex-shrink:0;padding-top:.1rem;opacity:.7}
+.ken-step-body{flex:1}
+.ken-step-title{font-size:.98rem;font-weight:600;color:var(--tx);line-height:1.3;margin-bottom:.2rem}
+.ken-step-desc{font-size:.88rem;color:var(--tx2);line-height:1.5}
+.ken-q{background:linear-gradient(135deg,rgba(124,111,205,.08),rgba(124,111,205,.02));border:1px solid rgba(124,111,205,.2);border-radius:14px;padding:1rem;margin-bottom:.7rem}
+.ken-q-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--acc2);margin-bottom:.5rem}
+.ken-q-text{font-size:1rem;line-height:1.6;color:var(--tx2)}
 `;
 
 // ── DATOS ────────────────────────────────────────────────────────────────────
@@ -276,6 +288,7 @@ export default function App() {
   const TABS = [
     { id:"inicio", label:"Inicio", Icon: () => <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> },
     { id:"parabolа", label:"Parábola", Icon: Users },
+    { id:"kenosis", label:"Kénosis", Icon: Heart },
     { id:"interpreta", label:"Discípulos", Icon: Eye },
     { id:"biblia", label:"Biblia", Icon: BookOpen },
     { id:"quiz", label:"Quiz", Icon: Shield },
@@ -309,6 +322,7 @@ export default function App() {
           <div className="content" key={tab}>
             {tab === "inicio" && <TabInicio teacherMode={teacherMode} />}
             {tab === "parabolа" && <TabParabola openExpand={openExpand} toggleExpand={toggleExpand} />}
+            {tab === "kenosis" && <TabKenosis />}
             {tab === "interpreta" && <TabInterpreta />}
             {tab === "biblia" && <TabBiblia openVerses={openVerses} toggle={toggleVerse} renderVerseText={renderVerseText} />}
             {tab === "quiz" && (
@@ -348,6 +362,7 @@ function TabInicio({ teacherMode }) {
         <div className="card-label">Explorar esta semana</div>
         <p>
           <strong style={{ color:"var(--tx)" }}>Parábola</strong> — El fariseo y el publicano (Lucas 18:9-14)<br />
+          <strong style={{ color:"var(--tx)" }}>Kénosis</strong> — Filipenses 2:3-8 · El descenso de Jesús<br />
           <strong style={{ color:"var(--tx)" }}>Discípulos</strong> — El orgullo hasta el final del ministerio de Jesús<br />
           <strong style={{ color:"var(--tx)" }}>Biblia</strong> — Todos los versículos de la semana
         </p>
@@ -464,6 +479,58 @@ function TabInterpreta() {
       <div className="card">
         <div className="card-label">Reflexión — Salmo 138:6</div>
         <p>«Jehová es excelso, y atiende al humilde; mas al altivo mira de lejos.» Dios no está lejos del humilde — está cerca. El orgullo es la mayor distancia entre el alma y Dios.</p>
+      </div>
+    </>
+  );
+}
+
+// ── TAB: KÉNOSIS ─────────────────────────────────────────────────────────────
+function TabKenosis() {
+  return (
+    <>
+      <div className="sec-title">El Himno de la Kénosis</div>
+      <div className="sec-sub">Filipenses 2:3-8 — El descenso voluntario de Jesús como modelo de humildad radical.</div>
+
+      <div className="egw-wrap">
+        <div className="egw-source"><BookOpen size={12} />Filipenses 2:5</div>
+        <div className="egw-text">«Haya, pues, en vosotros este sentir que hubo también en <strong>Cristo Jesús</strong>.»</div>
+      </div>
+
+      <div className="card-label" style={{ marginBottom:".6rem", paddingLeft:".2rem" }}>El descenso de Jesús — paso a paso</div>
+      <div className="ken-descent">
+        {[
+          { arrow:"↓", title:"Era igual a Dios", desc:"Siendo en forma de Dios — poseía toda la gloria, poder y atributos divinos. No era una cuestión de duda: era Dios." },
+          { arrow:"↓", title:"No se aferró a eso", desc:"No estimó el ser igual a Dios como cosa a que aferrarse. Pudo haberlo exigido — y eligió no hacerlo. Eso es kénosis: vaciarse voluntariamente." },
+          { arrow:"↓", title:"Se despojó a sí mismo", desc:"Tomó forma de siervo. El Creador del universo eligió nacer en un pesebre, trabajar como carpintero, no tener dónde reclinar la cabeza." },
+          { arrow:"↓", title:"Se hizo semejante a los hombres", desc:"No solo tomó apariencia humana — asumió plenamente la condición humana con sus limitaciones, hambre, cansancio y dolor." },
+          { arrow:"↓", title:"Se humilló a sí mismo", desc:"Haciéndose obediente hasta la muerte. No fue un accidente ni una imposición — fue obediencia activa y amor voluntario." },
+          { arrow:"✕", title:"Muerte de cruz", desc:"El punto más bajo. La muerte más vergonzosa del Imperio Romano, reservada para criminales despreciados. Hecho esto por amor a quienes lo crucificaron." },
+        ].map(({ arrow, title, desc }, i) => (
+          <div key={i} className="ken-step">
+            <div className="ken-arrow">{arrow}</div>
+            <div className="ken-step-body">
+              <div className="ken-step-title">{title}</div>
+              <div className="ken-step-desc">{desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="card-label" style={{ marginBottom:".6rem", paddingLeft:".2rem" }}>Preguntas para reflexionar</div>
+      {[
+        { q:"¿Qué renunció Jesús en cada etapa de este descenso? ¿Qué te costaría más renunciar a vos?" },
+        { q:"Si Jesús —siendo Dios— eligió el lugar más bajo, ¿qué dice eso sobre cómo debemos relacionarnos con quienes nos rodean? (Fil 2:3-4)" },
+        { q:"¿En qué situación concreta de tu vida necesitás aplicar el 'sentir de Cristo Jesús' esta semana?" },
+      ].map(({ q }, i) => (
+        <div key={i} className="ken-q">
+          <div className="ken-q-label">Reflexión {i + 1}</div>
+          <div className="ken-q-text">{q}</div>
+        </div>
+      ))}
+
+      <div className="egw-wrap" style={{ marginTop:".5rem" }}>
+        <div className="egw-source"><BookOpen size={12} />Elena G. de White · El Deseado de todas las gentes, cap. 48, pp. 411-412</div>
+        <div className="egw-text">«Se humilló voluntariamente para convertirse en el más bajo de lo bajo: un simple siervo [...] No fue a la cruz para exaltarse a sí mismo; fue a la cruz para exaltarnos a nosotros. <strong>Se humilló para que nosotros pudiéramos ser exaltados</strong>.»</div>
       </div>
     </>
   );
