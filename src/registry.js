@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Segundo Trimestre ────────────────────────────────────────────────
   {
+    slug: "papel-biblia",
+    title: "El papel de la Biblia",
+    description: "Semana 4 · 2do Trimestre 2026",
+    date: "2026-04-25",
+    trimestre: "2do Trimestre 2026",
+    accent: "#0d9488",
+    bg: "#060e0d",
+    component: lazy(() => import("./apps/papel-biblia/App.jsx")),
+  },
+  {
     slug: "orgullo-humildad",
     title: "Orgullo versus Humildad",
     description: "Semana 3 · 2do Trimestre 2026",
