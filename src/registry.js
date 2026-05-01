@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Segundo Trimestre ────────────────────────────────────────────────
   {
+    slug: "salmo-119-biblia",
+    title: "Cómo estudiar la Biblia",
+    description: "Semana 5 · 2do Trimestre 2026",
+    date: "2026-05-02",
+    trimestre: "2do Trimestre 2026",
+    accent: "#c48a0c",
+    bg: "#0d0b06",
+    component: lazy(() => import("./apps/salmo-119-biblia/App.jsx")),
+  },
+  {
     slug: "papel-biblia",
     title: "El papel de la Biblia",
     description: "Semana 4 · 2do Trimestre 2026",
