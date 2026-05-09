@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Segundo Trimestre ────────────────────────────────────────────────
   {
+    slug: "daniel6-oracion",
+    title: "Mi vida de oración",
+    description: "Semana 6 · 2do Trimestre 2026",
+    date: "2026-05-09",
+    trimestre: "2do Trimestre 2026",
+    accent: "#4a8fd4",
+    bg: "#070a14",
+    component: lazy(() => import("./apps/daniel6-oracion/App.jsx")),
+  },
+  {
     slug: "salmo-119-biblia",
     title: "Cómo estudiar la Biblia",
     description: "Semana 5 · 2do Trimestre 2026",
