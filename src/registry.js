@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Segundo Trimestre ────────────────────────────────────────────────
   {
+    slug: "samuel1-oracion",
+    title: "La práctica de la oración",
+    description: "Semana 7 · 2do Trimestre 2026",
+    date: "2026-05-16",
+    trimestre: "2do Trimestre 2026",
+    accent: "#c4607a",
+    bg: "#0f080a",
+    component: lazy(() => import("./apps/samuel1-oracion/App.jsx")),
+  },
+  {
     slug: "daniel6-oracion",
     title: "Mi vida de oración",
     description: "Semana 6 · 2do Trimestre 2026",
