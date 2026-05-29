@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Segundo Trimestre ────────────────────────────────────────────────
   {
+    slug: "mateo5-ley",
+    title: "El pecado, el evangelio y la ley",
+    description: "Semana 9 · 2do Trimestre 2026",
+    date: "2026-05-30",
+    trimestre: "2do Trimestre 2026",
+    accent: "#c0394c",
+    bg: "#0f0609",
+    component: lazy(() => import("./apps/mateo5-ley/App.jsx")),
+  },
+  {
     slug: "marcos9-fe",
     title: "Tener fe",
     description: "Semana 8 · 2do Trimestre 2026",
