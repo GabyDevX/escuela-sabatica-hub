@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Segundo Trimestre ────────────────────────────────────────────────
   {
+    slug: "exodo34-arrepentimiento",
+    title: "El arrepentimiento y el perdón",
+    description: "Semana 10 · 2do Trimestre 2026",
+    date: "2026-06-06",
+    trimestre: "2do Trimestre 2026",
+    accent: "#a855f7",
+    bg: "#080612",
+    component: lazy(() => import("./apps/exodo34-arrepentimiento/App.jsx")),
+  },
+  {
     slug: "mateo5-ley",
     title: "El pecado, el evangelio y la ley",
     description: "Semana 9 · 2do Trimestre 2026",

@@ -12,15 +12,17 @@ createRoot(document.getElementById("root")).render(
 const updateSW = registerSW({
   onRegisteredSW(swUrl, r) {
     if (r) {
-      // Forzar chequeo de nueva versión cada vez que la app vuelve a ganar foco
+      // Chequear inmediatamente al cargar la app
+      r.update();
+      // Y también cada vez que la app recupera foco
       window.addEventListener("focus", () => {
         r.update();
       });
     }
   },
   onNeedRefresh() {
-    // Cuando hay una nueva versión y se completó la descarga, recargamos la PWA
-    window.location.reload();
+    // Activar el nuevo SW (skip waiting + claim) y dejar que tome control
+    updateSW(true);
   }
 });
 
