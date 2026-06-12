@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Segundo Trimestre ────────────────────────────────────────────────
   {
+    slug: "marcos4-reveses",
+    title: "Reveses de la vida",
+    description: "Semana 11 · 2do Trimestre 2026",
+    date: "2026-06-13",
+    trimestre: "2do Trimestre 2026",
+    accent: "#0ea5b8",
+    bg: "#04090f",
+    component: lazy(() => import("./apps/marcos4-reveses/App.jsx")),
+  },
+  {
     slug: "exodo34-arrepentimiento",
     title: "El arrepentimiento y el perdón",
     description: "Semana 10 · 2do Trimestre 2026",
