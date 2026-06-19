@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Segundo Trimestre ────────────────────────────────────────────────
   {
+    slug: "hechos4-testimonio",
+    title: "Hablar de Jesús al mundo",
+    description: "Semana 12 · 2do Trimestre 2026",
+    date: "2026-06-20",
+    trimestre: "2do Trimestre 2026",
+    accent: "#e8683a",
+    bg: "#0f0806",
+    component: lazy(() => import("./apps/hechos4-testimonio/App.jsx")),
+  },
+  {
     slug: "marcos4-reveses",
     title: "Reveses de la vida",
     description: "Semana 11 · 2do Trimestre 2026",
