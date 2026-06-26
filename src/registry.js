@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Segundo Trimestre ────────────────────────────────────────────────
   {
+    slug: "apocalipsis21-eternidad",
+    title: "Hacia la eternidad",
+    description: "Semana 13 · 2do Trimestre 2026",
+    date: "2026-06-27",
+    trimestre: "2do Trimestre 2026",
+    accent: "#c9a03c",
+    bg: "#0c0a06",
+    component: lazy(() => import("./apps/apocalipsis21-eternidad/App.jsx")),
+  },
+  {
     slug: "hechos4-testimonio",
     title: "Hablar de Jesús al mundo",
     description: "Semana 12 · 2do Trimestre 2026",
