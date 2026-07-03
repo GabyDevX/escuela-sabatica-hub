@@ -8,6 +8,17 @@
 import { lazy } from "react";
 
 export const apps = [
+  // ── 2026 Tercer Trimestre ─────────────────────────────────────────────────
+  {
+    slug: "juan12-provocacion-final",
+    title: "Las escenas finales",
+    description: "Semana 1 · 3er Trimestre 2026",
+    date: "2026-07-04",
+    trimestre: "3er Trimestre 2026",
+    accent: "#b8552e",
+    bg: "#0f0805",
+    component: lazy(() => import("./apps/juan12-provocacion-final/App.jsx")),
+  },
   // ── 2026 Segundo Trimestre ────────────────────────────────────────────────
   {
     slug: "apocalipsis21-eternidad",
