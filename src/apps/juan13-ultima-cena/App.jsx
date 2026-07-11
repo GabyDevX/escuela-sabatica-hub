@@ -106,11 +106,6 @@ body{font-family:'DM Sans',sans-serif}
 .key-dot{width:6px;height:6px;border-radius:50%;background:var(--acc);flex-shrink:0;margin-top:.55rem}
 .key-text{font-size:.97rem;line-height:1.6;color:var(--tx2)}
 .key-text strong{color:var(--tx)}
-.xref-table{margin-bottom:.9rem}
-.xref-group-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--acc2);padding:0 .1rem .55rem}
-.xref-row{display:flex;gap:.7rem;align-items:flex-start;background:var(--surf);border:1px solid var(--brd);border-radius:12px;padding:.75rem .9rem;margin-bottom:.5rem}
-.xref-ref{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--acc2);white-space:nowrap;padding-top:.15rem;min-width:92px}
-.xref-desc{font-size:.92rem;line-height:1.5;color:var(--tx2)}
 .discuss-block{margin-bottom:1.1rem}
 .discuss-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--tx);margin-bottom:.55rem}
 .discuss-q{display:flex;gap:.6rem;align-items:flex-start;padding:.55rem 0;border-bottom:1px solid var(--brd)}
@@ -180,21 +175,27 @@ const INTERPRETA_DATA = [
   },
 ];
 
-const XREF_PARALELOS = [
-  { ref: "Mateo 26:14-35", desc: "Relato paralelo de la última cena, la institución de la Cena del Señor y la predicción de la negación de Pedro." },
-  { ref: "Marcos 14:10-31", desc: "Otro relato del aposento alto, con el mismo desenlace: Judas se ausenta para negociar la entrega de Jesús." },
-  { ref: "Lucas 22:13-34", desc: "Incluye el diálogo único entre Jesús y Simón Pedro sobre la petición de Satanás y la oración de Cristo por él." },
-];
-
-const XREF_PROFECIAS = [
-  { ref: "Salmo 41:9", desc: "«Aun el hombre de mi paz, en quien yo confiaba, el que de mi pan comía, alzó contra mí el calcañar». Profecía directa de la traición de Judas." },
-  { ref: "Salmo 55:12-14", desc: "David lamenta la traición de un amigo cercano con quien compartía dulce comunión, anticipando lo que Jesús sufriría con Judas." },
-  { ref: "Zacarías 13:7", desc: "«Hiere al pastor, y serán dispersadas las ovejas». Anuncia que los discípulos huirían al ser arrestado su Maestro." },
-];
-
-const XREF_PASCUA = [
-  { ref: "1 Corintios 5:7", desc: "«Porque nuestra pascua, que es Cristo, ya fue sacrificada por nosotros». El Cordero pascual del Antiguo Testamento se cumple en Jesús." },
-  { ref: "1 Pedro 1:19", desc: "Fuimos rescatados «con la sangre preciosa de Cristo, como de un cordero sin mancha y sin contaminación»." },
+const INVESTIGA_DATA = [
+  {
+    key: "iv1", badge: "Mateo 26:14-16; Lucas 22:24",
+    name: "1. Lo que añaden los relatos paralelos",
+    body: "Mateo y Marcos coinciden en que Judas ya había pactado con los principales sacerdotes por treinta piezas de plata antes de sentarse a la mesa (Mateo 26:14-16). Lucas añade un detalle inquietante: mientras Jesús instituía la Cena del Señor, los discípulos discutían entre ellos quién sería el mayor (Lucas 22:24). El contraste no podría ser más marcado: Jesús se ceñía con una toalla mientras ellos competían por el primer lugar."
+  },
+  {
+    key: "iv2", badge: "Salmo 41:9; Zacarías 13:7",
+    name: "2. Profecías escritas siglos antes",
+    body: "David ya había lamentado la traición de un amigo de mesa: «El que de mi pan comía, alzó contra mí el calcañar» (Salmo 41:9). Zacarías, por su parte, anunció que herido el pastor, las ovejas se dispersarían (Zacarías 13:7): exactamente lo que sucedería horas después, cuando todos los discípulos huyeron. Nada de lo ocurrido esa noche tomó a Dios por sorpresa."
+  },
+  {
+    key: "iv3", badge: "Marcos 14:12-16",
+    name: "3. Un aposento ya preparado",
+    body: "Jesús les dijo a dos de sus discípulos que encontrarían a un hombre llevando un cántaro de agua, tarea inusual porque solía corresponder a las mujeres. El detalle se cumplió exactamente como él lo había descrito. Antes de ser traicionado y crucificado, Jesús quería que sus discípulos supieran que él podía ver el futuro con claridad, y que nada de lo que sucedería ese fin de semana lo tomaría por sorpresa."
+  },
+  {
+    key: "iv4", badge: "1 Corintios 5:7; 1 Pedro 1:19",
+    name: "4. El cordero pascual, cumplido",
+    body: "Durante siglos, cada familia judía sacrificaba un cordero sin defecto en la Pascua, recordando la liberación de Egipto. Pablo declara sin rodeos: «Nuestra pascua, que es Cristo, ya fue sacrificada por nosotros» (1 Corintios 5:7). Pedro añade que fuimos rescatados «con la sangre preciosa de Cristo, como de un cordero sin mancha» (1 Pedro 1:19). El pan y el vino que Jesús compartió esa noche señalaban directamente hacia la cruz."
+  },
 ];
 
 const VERSES = [
@@ -488,43 +489,30 @@ function TabInterpreta({ openExpand, toggleExpand }) {
   );
 }
 
-function TabInvestiga() {
+function TabInvestiga({ openExpand, toggleExpand }) {
   return (
     <>
       <div className="sec-title">Investiga</div>
-      <div className="sec-sub">Referencias cruzadas para profundizar</div>
+      <div className="sec-sub">Lo que otros pasajes revelan sobre esa noche</div>
 
-      <div className="xref-table">
-        <div className="xref-group-label">Relatos paralelos</div>
-        {XREF_PARALELOS.map((x, i) => (
-          <div key={i} className="xref-row">
-            <div className="xref-ref">{x.ref}</div>
-            <div className="xref-desc">{x.desc}</div>
+      {INVESTIGA_DATA.map(item => (
+        <div
+          key={item.key}
+          className={`expand-item${openExpand[item.key] ? " open" : ""}`}
+          onClick={() => toggleExpand(item.key)}
+        >
+          <div className="expand-header">
+            <span className="expand-badge">{item.badge}</span>
+            <span className="expand-name">{item.name}</span>
+            {openExpand[item.key] ? <ChevronUp size={16} color="var(--acc2)" /> : <ChevronDown size={16} color="var(--tx3)" />}
           </div>
-        ))}
-      </div>
+          {openExpand[item.key] && (
+            <div className="expand-body">{item.body}</div>
+          )}
+        </div>
+      ))}
 
-      <div className="xref-table">
-        <div className="xref-group-label">Profecías de traición y abandono</div>
-        {XREF_PROFECIAS.map((x, i) => (
-          <div key={i} className="xref-row">
-            <div className="xref-ref">{x.ref}</div>
-            <div className="xref-desc">{x.desc}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="xref-table">
-        <div className="xref-group-label">El cumplimiento de la Pascua</div>
-        {XREF_PASCUA.map((x, i) => (
-          <div key={i} className="xref-row">
-            <div className="xref-ref">{x.ref}</div>
-            <div className="xref-desc">{x.desc}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="card" style={{ borderColor: "var(--brd2)" }}>
+      <div className="card" style={{ borderColor: "var(--brd2)", marginTop: ".4rem" }}>
         <div className="card-label">Para pensar</div>
         <p>¿Qué otros versículos o promesas te vienen a la mente en relación con Juan 13? Repasa el pasaje que hayas memorizado de este capítulo.</p>
       </div>
@@ -827,7 +815,7 @@ export default function App() {
             {tab === "inicio"       && <TabInicio teacherMode={teacherMode} />}
             {tab === "interioriza"  && <TabInterioriza openExpand={openExpand} toggleExpand={toggleExpand} />}
             {tab === "interpreta"   && <TabInterpreta openExpand={openExpand} toggleExpand={toggleExpand} />}
-            {tab === "investiga"    && <TabInvestiga />}
+            {tab === "investiga"    && <TabInvestiga openExpand={openExpand} toggleExpand={toggleExpand} />}
             {tab === "biblia"       && <TabBiblia openVerses={openVerses} toggle={toggleVerse} renderVerseText={renderVerseText} />}
             {tab === "quiz"         && (
               <TabQuiz
