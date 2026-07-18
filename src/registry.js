@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Tercer Trimestre ─────────────────────────────────────────────────
   {
+    slug: "juan14-escenas-finales",
+    title: "Un lugar preparado",
+    description: "Semana 3 · 3er Trimestre 2026",
+    date: "2026-07-18",
+    trimestre: "3er Trimestre 2026",
+    accent: "#5468c4",
+    bg: "#06070f",
+    component: lazy(() => import("./apps/juan14-escenas-finales/App.jsx")),
+  },
+  {
     slug: "juan13-ultima-cena",
     title: "La última cena",
     description: "Semana 2 · 3er Trimestre 2026",
