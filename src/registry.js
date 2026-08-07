@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Tercer Trimestre ─────────────────────────────────────────────────
   {
+    slug: "juan17-oracion-de-cristo",
+    title: "La oración de Cristo",
+    description: "Semana 6 · 3er Trimestre 2026",
+    date: "2026-08-08",
+    trimestre: "3er Trimestre 2026",
+    accent: "#7c5cc0",
+    bg: "#0b0813",
+    component: lazy(() => import("./apps/juan17-oracion-de-cristo/App.jsx")),
+  },
+  {
     slug: "juan14-escenas-finales",
     title: "Un lugar preparado",
     description: "Semana 3 · 3er Trimestre 2026",
