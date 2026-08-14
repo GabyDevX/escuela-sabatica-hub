@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Tercer Trimestre ─────────────────────────────────────────────────
   {
+    slug: "mateo26-getsemani",
+    title: "El jardín de Getsemaní",
+    description: "Semana 7 · 3er Trimestre 2026",
+    date: "2026-08-15",
+    trimestre: "3er Trimestre 2026",
+    accent: "#8a3b4a",
+    bg: "#0d0609",
+    component: lazy(() => import("./apps/mateo26-getsemani/App.jsx")),
+  },
+  {
     slug: "juan17-oracion-de-cristo",
     title: "La oración de Cristo",
     description: "Semana 6 · 3er Trimestre 2026",
