@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Tercer Trimestre ─────────────────────────────────────────────────
   {
+    slug: "mateo27-rey-en-la-cruz",
+    title: "El Rey en la cruz",
+    description: "Semana 10 · 3er Trimestre 2026",
+    date: "2026-09-05",
+    trimestre: "3er Trimestre 2026",
+    accent: "#7a1f38",
+    bg: "#070307",
+    component: lazy(() => import("./apps/mateo27-rey-en-la-cruz/App.jsx")),
+  },
+  {
     slug: "mateo26-getsemani",
     title: "El jardín de Getsemaní",
     description: "Semana 7 · 3er Trimestre 2026",
