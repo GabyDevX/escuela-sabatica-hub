@@ -29,6 +29,7 @@ No test or lint scripts are configured.
 | `src/registry.js` | Single source of truth for all lessons (metadata + colors) |
 | `src/App.jsx` | React Router setup; lazy-loads lesson components |
 | `src/HomePage.jsx` | Dashboard grid rendered from `registry.js` |
+| `src/responsive.css` | Global tablet/desktop layer (imported from `main.jsx`) |
 | `vite.config.js` | Vite + PWA plugin config (Workbox, manifest, icons) |
 | `vercel.json` | SPA fallback rewrite (all routes → `/index.html`) |
 
@@ -41,10 +42,22 @@ Each `src/apps/*/App.jsx` is fully self-contained:
 - **Teacher mode**: Tapping the lesson title 5 times toggles "Modo Maestro" — a hidden teacher guide with timing, notes, and historical context.
 - **Quiz**: Self-contained array of questions with instant feedback and a progress bar.
 - **Content**: Verses, diagnostics, and reflections are hardcoded arrays inside the component.
+- **Shell markup**: keep the shared structure `.app > (.scroll-area > (.hero, .content)) + nav.nav`. `src/responsive.css` keys off exactly these class names, so a new lesson gets the desktop layout for free — and loses it if it renames them.
 
 ### Styling
 
 Inline CSS-in-JS via `<style>` tags; no CSS preprocessor or CSS Modules. Each lesson imports Google Fonts it needs. The app shell uses dark defaults (`#07080d` background, `#e8eaf6` text) set in `index.html`.
+
+### Responsive layer
+
+Lessons are authored mobile-first as a 440px column. `src/responsive.css` (the one global stylesheet, imported from `main.jsx`) adapts that to bigger screens without touching any lesson file:
+
+- **< 700px** — nothing applies; the mobile design is untouched, pixel for pixel.
+- **≥ 700px** — the column widens to 640px, the hero and content get more side padding, and scrollbars become mouse-sized (`pointer: fine` only).
+- **≥ 940px and ≥ 600px tall** — `.app` flips to `row-reverse`, so the bottom tab bar becomes a 210px sidebar rail; the hero turns into a full-width banner and `.content` becomes a centered 690px reading column. The `min-height` guard keeps phones in landscape (e.g. 932×430) on the bottom tab bar.
+- The home grid goes 1 → 2 → 3 → 4 columns at 640 / 1040 / 1560px.
+
+Lesson CSS is injected from inside the component, i.e. into `<body>`, while this file lands in `<head>` — so it would lose the cascade on order. Every rule therefore carries a `body ` prefix to win on specificity instead. No `!important`, and nothing to remember when adding a lesson.
 
 ### PWA behavior
 

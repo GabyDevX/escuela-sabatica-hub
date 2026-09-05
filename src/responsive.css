@@ -1,0 +1,202 @@
+/* ============================================================================
+   responsive.css — capa de tablet / escritorio
+   ----------------------------------------------------------------------------
+   Las lecciones (src/apps/<slug>/App.jsx) inyectan su CSS con un <style> dentro
+   del componente, es decir en el <body>, mientras que este archivo se importa
+   desde main.jsx y termina en el <head>. Por orden de cascada perdería siempre,
+   así que cada regla lleva el prefijo `body ` para ganar por especificidad sin
+   necesidad de !important ni de tocar los 21 archivos de lecciones.
+   Sólo se apoya en las clases estructurales que comparten todas las lecciones:
+   .app, .scroll-area, .hero, .content (o .section-wrap / .ct) y nav.nav.
+
+   Por debajo de 700px no se aplica nada: el diseño móvil queda intacto.
+   ========================================================================== */
+
+/* ── Accesibilidad de teclado (todos los tamaños) ────────────────────────── */
+body :focus-visible {
+  outline: 2px solid var(--acc2, var(--acc, #7c5cc0));
+  outline-offset: 2px;
+}
+
+/* ============================================================================
+   TABLET — 700px+ : misma estructura móvil, columna más ancha y con más aire.
+   ========================================================================== */
+@media (min-width: 700px) {
+  body .app { max-width: 640px; }
+
+  body .app .hero { padding-left: 2rem; padding-right: 2rem; }
+
+  body .app .content,
+  body .app .section-wrap,
+  body .app .ct {
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+    padding-bottom: 3rem;
+  }
+
+  body .app > .nav button { font-size: .56rem; letter-spacing: .05em; }
+  body .app > .nav button svg { width: 19px; height: 19px; }
+}
+
+/* ── Barras de scroll utilizables con mouse/trackpad ─────────────────────── */
+@media (min-width: 700px) and (pointer: fine) {
+  body .app .scroll-area::-webkit-scrollbar,
+  body .hub-scroll-area::-webkit-scrollbar { width: 10px; }
+
+  body .app .scroll-area::-webkit-scrollbar-thumb,
+  body .hub-scroll-area::-webkit-scrollbar-thumb {
+    background: var(--brd2, var(--hub-brd, rgba(255, 255, 255, .16)));
+    background-clip: content-box;
+    border: 3px solid transparent;
+    border-radius: 999px;
+  }
+
+  body .app .scroll-area:hover::-webkit-scrollbar-thumb,
+  body .hub-scroll-area:hover::-webkit-scrollbar-thumb {
+    background: var(--acc2, var(--acc, rgba(255, 255, 255, .3)));
+    background-clip: content-box;
+  }
+}
+
+/* ============================================================================
+   ESCRITORIO — 940px+ (y alto suficiente): la barra de pestañas inferior se
+   convierte en un rail lateral y el contenido pasa a una columna de lectura.
+   El guard de min-height evita que un teléfono en horizontal (932x430) caiga
+   aquí y se quede sin barra de navegación usable.
+   ========================================================================== */
+@media (min-width: 940px) and (min-height: 600px) {
+  body .app {
+    max-width: 1060px;
+    flex-direction: row-reverse;   /* nav queda a la izquierda, scroll a la derecha */
+  }
+
+  body .app > .scroll-area {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* ── Rail lateral ─────────────────────────────────────────────────────── */
+  body .app > .nav {
+    flex: 0 0 210px;
+    width: 210px;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: .15rem;
+    /* 3.9rem arriba para dejar libre el botón "‹ Inicio", que es position:fixed */
+    padding: 3.9rem .7rem 1.5rem;
+    border-top: none;
+    border-right: 1px solid var(--brd, rgba(255, 255, 255, .09));
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  body .app > .nav button {
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: .7rem;
+    padding: .6rem .8rem;
+    border-radius: 10px;
+    font-size: .68rem;
+    letter-spacing: .07em;
+    text-align: left;
+  }
+
+  body .app > .nav button svg {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+  }
+
+  /* El indicador de pestaña activa era una barra superior: se vuelve vertical.
+     currentColor = el acento, porque `.nav button.on` ya define ese color. */
+  body .app > .nav button.on::before {
+    top: 20%;
+    bottom: 20%;
+    left: 0;
+    right: auto;
+    width: 2px;
+    height: auto;
+    background: currentColor;
+    border-radius: 0 2px 2px 0;
+  }
+
+  body .app > .nav button.on::after {
+    inset: 0;
+    border-radius: 10px;
+  }
+
+  /* ── Cabecera de la lección: banner ancho ─────────────────────────────── */
+  /* El padding lateral limita la caja de texto a 780px sin tocar el alineado
+     de cada lección (unas centran el hero y otras lo alinean a la izquierda).
+     Las capas decorativas (.hero-glow, .hero-bg, .hero-stars, .hero-line) son
+     absolutas y se siguen posicionando contra el ancho completo del hero. */
+  body .app .hero {
+    padding: 3.4rem max(2rem, calc((100% - 780px) / 2)) 2.9rem;
+  }
+
+  body .app .hero-title { font-size: 2rem; }
+
+  /* ── Columna de lectura ───────────────────────────────────────────────── */
+  body .app .content,
+  body .app .section-wrap,
+  body .app .ct {
+    max-width: 690px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 2rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 4rem;
+  }
+
+  /* ── Botón de volver, alineado al borde izquierdo de la app ───────────── */
+  body .back-btn {
+    top: 1rem;
+    left: max(1rem, calc(50% - 530px + 1rem));
+    font-size: .82rem;
+    padding: .45rem .95rem .45rem .7rem;
+  }
+}
+
+@media (min-width: 940px) and (min-height: 600px) and (hover: hover) {
+  body .app > .nav button:hover {
+    color: var(--tx2, rgba(255, 255, 255, .75));
+    background: rgba(255, 255, 255, .045);
+  }
+  body .app > .nav button.on:hover { color: var(--acc2, var(--acc)); }
+  body .back-btn:hover { background: rgba(0, 0, 0, .78); }
+}
+
+/* ============================================================================
+   HOME — la grilla de lecciones aprovecha el ancho disponible.
+   ========================================================================== */
+@media (min-width: 700px) {
+  body .hub-header,
+  body .hub-body { max-width: 1000px; }
+
+  body .hub-header { padding: 3.2rem 2rem 1.9rem; }
+  body .hub-body { padding: 2.4rem 2rem 3rem; }
+  body .hub-title { font-size: 2.15rem; }
+  body .hub-subtitle { font-size: .95rem; }
+}
+
+@media (min-width: 1040px) {
+  body .hub-header,
+  body .hub-body { max-width: 1200px; }
+
+  body .hub-section-cards { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1560px) {
+  body .hub-header,
+  body .hub-body { max-width: 1460px; }
+
+  body .hub-section-cards { grid-template-columns: repeat(4, 1fr); }
+}

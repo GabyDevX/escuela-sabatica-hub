@@ -324,7 +324,7 @@ function WelcomeSection() {
           Esta semana exploramos un tema fuerte: <strong style={{color:"var(--acc3)"}}>los cultos apocalípticos y las sectas</strong>. Vamos a ver qué las define, cómo operan, y por qué la iglesia primitiva (y la Iglesia Adventista) son radicalmente diferentes.
         </p>
         <div className="dv"/>
-        <p>Navegá por las secciones usando el menú de abajo. Al final hay un <strong style={{color:"var(--warn)"}}>quiz de 7 preguntas</strong> para poner a prueba lo que aprendiste.</p>
+        <p>Navegá por las secciones usando el menú de navegación. Al final hay un <strong style={{color:"var(--warn)"}}>quiz de 7 preguntas</strong> para poner a prueba lo que aprendiste.</p>
       </div>
       <div className="card" style={{borderColor:"var(--acc)"}}>
         <h3 style={{fontSize:".9rem",color:"var(--acc3)",display:"flex",alignItems:"center",gap:".3rem"}}><Star size={15}/> Texto base de la semana</h3>
