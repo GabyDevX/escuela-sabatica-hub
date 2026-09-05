@@ -33,6 +33,7 @@ export default defineConfig({
       includeAssets: ["icon-192.png", "icon-512.png", "favicon.svg"],
       manifest: {
         name: "Escuela Sabática — Recursos Interactivos",
+        lang: "es",
         short_name: "Esc. Sabática",
         description: "Recursos interactivos semanales para Escuela Sabática",
         theme_color: "#07080d",
