@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useParams, useNavigate, Navigate } from "
 import HomePage from "./HomePage.jsx";
 import ReadyGate from "./ReadyGate.jsx";
 import { appMap } from "./registry.js";
+import UpdateBanner from "./UpdateBanner.jsx";
 
 const BACK_CSS = `
 .back-btn {
@@ -120,6 +121,7 @@ function AppView() {
 export default function App() {
   return (
     <BrowserRouter>
+      <UpdateBanner />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/app/:slug" element={<AppView />} />

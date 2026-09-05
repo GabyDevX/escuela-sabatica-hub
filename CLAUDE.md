@@ -48,4 +48,12 @@ Inline CSS-in-JS via `<style>` tags; no CSS preprocessor or CSS Modules. Each le
 
 ### PWA behavior
 
-The service worker auto-updates when the window regains focus (`src/main.jsx`). Offline fallback is `/index.html`. Icons live in `public/` (192×192 and 512×512, both maskable).
+Update logic lives in `src/pwa.js` (wired up from `src/main.jsx`). The service worker is registered in `prompt` mode, so a new worker installs but waits — `src/pwa.js` decides when to activate it:
+
+- **Trigger**: `visibilitychange` / `pageshow` (i.e. every time the app is opened or resumed), plus `focus`, `online`, and a 15-minute poll. `focus` alone is not enough — installed PWAs, especially on iOS, often don't fire it on resume.
+- **Detection**: `registration.update()`, backed by `/version.json` (a build stamp emitted by the `buildVersion` plugin in `vite.config.js` and served with `no-store`, so it bypasses both the service worker and the HTTP cache). The same stamp is inlined into the bundle as `__BUILD_ID__`.
+- **Applying**: at the index and just after opening the app it reloads silently; mid-lesson it shows the `UpdateBanner` pill instead and applies on the next open. Reload is driven by `controllerchange`, with a 3s timeout as backstop.
+- **Self-healing**: if `/version.json` reports a new build but no worker installs within 8s, caches are cleared and the worker re-registered — once per session, so it can't loop.
+- Failed lazy-chunk imports (`vite:preloadError`) from a stale build reload once instead of hitting the `ErrorBoundary`.
+
+`vercel.json` sends `no-cache` for `sw.js`, `index.html` and the manifest, and `no-store` for `version.json`. Offline fallback is `/index.html`. Icons live in `public/` (192×192 and 512×512, both maskable).

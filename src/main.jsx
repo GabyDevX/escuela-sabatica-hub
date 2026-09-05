@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { registerSW } from "virtual:pwa-register";
 import App from "./App.jsx";
+import { initPWA } from "./pwa.js";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -9,22 +9,7 @@ createRoot(document.getElementById("root")).render(
   </StrictMode>
 );
 
-const updateSW = registerSW({
-  onRegisteredSW(swUrl, r) {
-    if (r) {
-      // Chequear inmediatamente al cargar la app
-      r.update();
-      // Y también cada vez que la app recupera foco
-      window.addEventListener("focus", () => {
-        r.update();
-      });
-    }
-  },
-  onNeedRefresh() {
-    // Activar el nuevo SW (skip waiting + claim) y dejar que tome control
-    updateSW(true);
-  }
-});
+initPWA();
 
 // Remove splash once React has painted (double-rAF guarantees first paint committed)
 requestAnimationFrame(() =>
