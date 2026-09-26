@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Tercer Trimestre ─────────────────────────────────────────────────
   {
+    slug: "apocalipsis14-escenas-finales",
+    title: "Las escenas finales de la tierra",
+    description: "Semana 13 · 3er Trimestre 2026",
+    date: "2026-09-26",
+    trimestre: "3er Trimestre 2026",
+    accent: "#2f7fa6",
+    bg: "#040a0e",
+    component: lazy(() => import("./apps/apocalipsis14-escenas-finales/App.jsx")),
+  },
+  {
     slug: "juan19-muerte-y-sepultura",
     title: "La muerte y la sepultura",
     description: "Semana 11 · 3er Trimestre 2026",
