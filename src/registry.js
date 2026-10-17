@@ -8,6 +8,17 @@
 import { lazy } from "react";
 
 export const apps = [
+  // ── 2026 Cuarto Trimestre ─────────────────────────────────────────────────
+  {
+    slug: "reyes19-humanidad-profetas",
+    title: "La humanidad de los profetas",
+    description: "Semana 3 · 4to Trimestre 2026",
+    date: "2026-10-17",
+    trimestre: "4to Trimestre 2026",
+    accent: "#a8508f",
+    bg: "#0d060b",
+    component: lazy(() => import("./apps/reyes19-humanidad-profetas/App.jsx")),
+  },
   // ── 2026 Tercer Trimestre ─────────────────────────────────────────────────
   {
     slug: "apocalipsis14-escenas-finales",
