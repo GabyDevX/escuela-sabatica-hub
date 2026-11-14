@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Cuarto Trimestre ─────────────────────────────────────────────────
   {
+    slug: "jeremias36-resistencia",
+    title: "Ira ante el mensaje de Dios",
+    description: "Semana 7 · 4to Trimestre 2026",
+    date: "2026-11-14",
+    trimestre: "4to Trimestre 2026",
+    accent: "#c4572d",
+    bg: "#0e0705",
+    component: lazy(() => import("./apps/jeremias36-resistencia/App.jsx")),
+  },
+  {
     slug: "reyes19-humanidad-profetas",
     title: "La humanidad de los profetas",
     description: "Semana 3 · 4to Trimestre 2026",
