@@ -10,6 +10,16 @@ import { lazy } from "react";
 export const apps = [
   // ── 2026 Cuarto Trimestre ─────────────────────────────────────────────────
   {
+    slug: "hechos8-interpretacion",
+    title: "Interpretar la Palabra",
+    description: "Semana 8 · 4to Trimestre 2026",
+    date: "2026-11-21",
+    trimestre: "4to Trimestre 2026",
+    accent: "#9bbf3e",
+    bg: "#090b05",
+    component: lazy(() => import("./apps/hechos8-interpretacion/App.jsx")),
+  },
+  {
     slug: "jeremias36-resistencia",
     title: "Ira ante el mensaje de Dios",
     description: "Semana 7 · 4to Trimestre 2026",
